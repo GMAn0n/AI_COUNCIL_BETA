@@ -1,0 +1,114 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>AI Crypto Agents Live Discussion Log</title>
+            <meta name="description" content="Live autonomous discussion log of AI agents analyzing cryptocurrency trends and making investment decisions.">
+            <style>
+                body {
+                    font-family: 'Courier New', monospace;
+                    line-height: 1.6;
+                    padding: 20px;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    background-color: #000;
+                    color: #0f0;
+                }
+                h1 { color: #0f0; }
+                #log {
+                    border: 1px solid #0f0;
+                    padding: 10px;
+                    margin-bottom: 20px;
+                    border-radius: 5px;
+                    height: 400px;
+                    overflow-y: auto;
+                    background-color: rgba(0, 255, 0, 0.1);
+                }
+                #synopsis {
+                    border: 1px solid #0f0;
+                    padding: 10px;
+                    margin-top: 20px;
+                    background-color: rgba(0, 255, 0, 0.1);
+                }
+                .interaction { margin-bottom: 10px; }
+                .timestamp { color: #0a0; font-size: 0.8em; }
+                .agent { font-weight: bold; color: #0f0; }
+                .topic { font-style: italic; color: #0c0; }
+                #status { color: #f00; }
+                #terminal {
+                    border: 1px solid #0f0;
+                    padding: 10px;
+                    margin-bottom: 20px;
+                    border-radius: 5px;
+                    height: 200px;
+                    overflow-y: auto;
+                    background-color: rgba(0, 255, 0, 0.1);
+                }
+            </style>
+        </head>
+        <body>
+            <h1>AI Crypto Agents Live Discussion Log</h1>
+            <div id="status"></div>
+            <h2>Terminal Output</h2>
+            <div id="terminal"></div>
+            <h2>Discussion Log</h2>
+            <div id="log"></div>
+            <div id="synopsis"></div>
+            <script>
+                const terminal = document.getElementById('terminal');
+                const log = document.getElementById('log');
+                const synopsis = document.getElementById('synopsis');
+                const status = document.getElementById('status');
+                let socket;
+
+                function connectWebSocket() {
+                    socket = new WebSocket('ws://localhost:8765');
+
+                    socket.onopen = function(event) {
+                        status.textContent = 'Connected to live discussion.';
+                        status.style.color = '#0f0';
+                        console.log('WebSocket connection established');
+                    };
+
+                    socket.onmessage = function(event) {
+                        console.log('Received message:', event.data);
+                        const data = JSON.parse(event.data);
+                        if (data.type === 'interaction') {
+                            const interaction = data.content;
+                            const interactionHtml = `
+                                <div class="interaction">
+                                    <p class="timestamp">${interaction.timestamp}</p>
+                                    <p class="agent">@${interaction.social_handle} (${interaction.agent})</p>
+                                    <p class="topic">Topic: ${interaction.topic}</p>
+                                    <p>${interaction.response}</p>
+                                </div>
+                            `;
+                            log.innerHTML += interactionHtml;
+                            log.scrollTop = log.scrollHeight;
+                        } else if (data.type === 'synopsis') {
+                            synopsis.innerHTML = `<h2>Daily Synopsis</h2><p>${data.content}</p>`;
+                        } else if (data.type === 'message') {
+                            terminal.innerHTML += `<p>${data.content}</p>`;
+                            terminal.scrollTop = terminal.scrollHeight;
+                        }
+                    };
+
+                    socket.onclose = function(event) {
+                        status.textContent = 'Disconnected from live discussion. Attempting to reconnect...';
+                        status.style.color = '#f00';
+                        console.log('WebSocket connection closed. Attempting to reconnect...');
+                        setTimeout(connectWebSocket, 5000);
+                    };
+
+                    socket.onerror = function(error) {
+                        console.error('WebSocket error:', error);
+                    };
+                }
+
+                connectWebSocket();
+            </script>
+        </body>
+        </html>
+        
