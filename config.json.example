@@ -1,136 +1,156 @@
 {
-  "//": "--------------------------------------------------------------------------",
-  "//": " RPC Endpoints & Chain IDs                                                ",
-  "//": "--------------------------------------------------------------------------",
-  "//": "Define connection details for EVM-compatible networks.",
-  "//": "Replace placeholder URLs with your actual RPC provider URLs (e.g., Infura, Alchemy, QuickNode, or your own node).",
+  "//": "==========================================================================",
+  "//": " General EVM Network Configuration                                      ",
+  "//": "==========================================================================",
+  "//": "Define connection details for various EVM-compatible networks.",
+  "//": "Replace placeholder URLs with your actual RPC provider URLs (e.g., from Infura, Alchemy, QuickNode, or your own node).",
   "rpc_urls": {
     "ethereum": "YOUR_ETHEREUM_MAINNET_RPC_URL",
     "sepolia": "YOUR_SEPOLIA_TESTNET_RPC_URL",
     "polygon": "YOUR_POLYGON_MAINNET_RPC_URL",
-    "polygon_mumbai": "YOUR_POLYGON_MUMBAI_TESTNET_RPC_URL"
+    "polygon_mumbai": "YOUR_POLYGON_MUMBAI_TESTNET_RPC_URL",
+    "bsc": "YOUR_BSC_MAINNET_RPC_URL",
+    "arbitrum": "YOUR_ARBITRUM_ONE_RPC_URL",
+    "optimism": "YOUR_OPTIMISM_MAINNET_RPC_URL",
+    "avalanche": "YOUR_AVALANCHE_C_CHAIN_RPC_URL",
+    "base": "YOUR_BASE_MAINNET_RPC_URL",
+    "fantom": "YOUR_FANTOM_OPERA_RPC_URL"
   },
-  "//": "Corresponding chain IDs for the networks defined above.",
-  "//": "Common examples: Ethereum Mainnet (1), Sepolia Testnet (11155111), Polygon Mainnet (137), Polygon Mumbai Testnet (80001).",
+  "//": "Corresponding chain IDs for the EVM networks defined above.",
+  "//": "Verify these from official sources like https://chainlist.org/",
   "chain_ids": {
     "ethereum": 1,
     "sepolia": 11155111,
     "polygon": 137,
-    "polygon_mumbai": 80001
+    "polygon_mumbai": 80001,
+    "bsc": 56,
+    "arbitrum": 42161,
+    "optimism": 10,
+    "avalanche": 43114,
+    "base": 8453,
+    "fantom": 250
   },
 
-  "//": "--------------------------------------------------------------------------",
-  "//": " Wallet Private Key - !! CRITICAL SECURITY WARNING !!                     ",
-  "//": "--------------------------------------------------------------------------",
-  "//": "This field is for your wallet's private key. It provides full control over your assets.",
+  "//": "==========================================================================",
+  "//": " EVM Wallet Private Key - !! CRITICAL SECURITY WARNING !!                 ",
+  "//": "==========================================================================",
+  "//": "Private key for the EVM-compatible wallet used for on-chain transactions.",
   "//": "  - NEVER hardcode a mainnet private key here for production systems.",
-  "//": "  - PREFER using environment variables (e.g., `export EVM_PRIVATE_KEY='your_key'`) or a secure secrets vault.",
-  "//": "  - If used for TESTNETS, ensure this `config.json` (if created from this example)",
-  "//": "    is added to your `.gitignore` file to prevent accidental commits.",
-  "//": "  - You are solely responsible for the security of your private key and any funds it controls.",
-  "private_key": "YOUR_PRIVATE_KEY_HERE_ONLY_FOR_A_TESTNET_WALLET_AND_NEVER_COMMIT_THIS_FILE_WITH_A_REAL_KEY",
+  "//": "  - PREFER using environment variables (e.g., `export EVM_PRIVATE_KEY='0xyour_hex_key'`).",
+  "//": "    The scripts are designed to prioritize the `EVM_PRIVATE_KEY` environment variable.",
+  "//": "  - If using this file for a TESTNET key, ensure `config.json` is in your `.gitignore`.",
+  "//": "  - You are solely responsible for the security of this key and any funds it controls.",
+  "private_key": "YOUR_EVM_PRIVATE_KEY_HEX_STRING_HERE_NEVER_COMMIT_REAL_KEYS",
 
-  "//": "--------------------------------------------------------------------------",
-  "//": " Decentralized Exchange (DEX) Router Addresses                          ",
-  "//": "--------------------------------------------------------------------------",
-  "//": "Contract addresses for DEX routers on each network.",
-  "//": "These are used for executing trades. Ensure they are correct for your chosen networks/DEXs.",
+  "//": "==========================================================================",
+  "//": " Solana Blockchain Configuration                                          ",
+  "//": "==========================================================================",
+  "solana_settings": {
+    "comment_solana_rpc": "RPC URLs for Solana networks. Replace with your preferred, reliable endpoints.",
+    "solana_rpc_url_mainnet": "https://api.mainnet-beta.solana.com",
+    "solana_rpc_url_devnet": "https://api.devnet.solana.com",
+
+    "comment_solana_private_key": [
+      "!! CRITICAL !! Your Solana wallet's private key, BASE58 ENCODED.",
+      "This key provides full control over your Solana wallet and associated funds.",
+      "KEEP THIS SECRET. DO NOT SHARE IT. NEVER COMMIT IT TO PUBLIC REPOSITORIES.",
+      "For production or any valuable assets, STRONGLY prefer using environment variables ",
+      "(e.g., `export SOLANA_PRIVATE_KEY_B58='your_base58_key'`) or a secure secrets vault.",
+      "The scripts are designed to prioritize the `SOLANA_PRIVATE_KEY_B58` environment variable."
+    ],
+    "solana_private_key_b58": "YOUR_SOLANA_WALLET_PRIVATE_KEY_B58_ENCODED_HERE_NEVER_COMMIT_REAL_KEYS"
+    // "Example of a Base58 private key format (DO NOT USE, IT'S A DUMMY): 4TaQ...manyCharacters...pL5v"
+    // "A Solana private key is typically a 64-byte array, base58 encoded into a string of ~86-88 characters."
+  },
+
+  "//": "==========================================================================",
+  "//": " EVM Decentralized Exchange (DEX) Router Addresses                      ",
+  "//": "==========================================================================",
+  "//": "Contract addresses for common DEX routers on EVM networks.",
+  "//": "Verify these from official DEX documentation or block explorers.",
   "dex_routers": {
-    "ethereum": {
-      "uniswap_v2": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
-    },
-    "sepolia": {
-      "uniswap_v2": "0xC532a74256D3Db42D0Bf7a0400fEFDbad7694008" // Example Sepolia Uniswap V2 Router
-    },
-    "polygon": {
-      "quickswap": "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
-    },
-    "polygon_mumbai": {
-      "quickswap": "0x8954AfA98594b838bda56FE4C12a09DA64D2141G" // Example for Mumbai (check for actual and update)
-    }
+    "ethereum": {"uniswap_v2": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "sushiswap": "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F"},
+    "sepolia": {"uniswap_v2": "0xC532a74256D3Db42D0Bf7a0400fEFDbad7694008"}, // Example, verify for current Sepolia testnet
+    "polygon": {"quickswap": "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"},
+    "bsc": {"pancakeswap_v2": "0x10ED43C718714eb63d5aA57B78B54704E256024E"}
+    // Add other DEXs (e.g., TraderJoe for Avalanche) and networks as needed.
   },
 
-  "//": "--------------------------------------------------------------------------",
-  "//": " Token Addresses                                                          ",
-  "//": "--------------------------------------------------------------------------",
-  "//": "Contract addresses for common ERC20 tokens on each network.",
-  "//": "  - `NATIVE` is a special keyword for the native currency (e.g., ETH, MATIC).",
-  "//": "  - `WETH` (or WMATIC for Polygon) is the wrapped version of the native currency,",
-  "//": "    often required for interacting with DEXs.",
-  "//": "  - Add other tokens you intend to trade or track.",
+  "//": "==========================================================================",
+  "//": " EVM Token Addresses (and Solana Mint Addresses)                          ",
+  "//": "==========================================================================",
+  "//": "Contract/Mint addresses for common tokens. `NATIVE` is for native currency.",
+  "//": "`WETH`/`WMATIC`/`WBNB`/`WSOL` are wrapped native tokens.",
+  "//": "Always verify addresses from official sources (CoinGecko, project docs, explorers).",
   "token_addresses": {
-    "ethereum": {
-      "NATIVE": "ETH",
-      "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F"
-    },
-    "sepolia": {
-      "NATIVE": "ETH",
-      "WETH": "0x7b79995e5f793A07Bc00c21412e50Ea00A78R7Sp", // Example WETH on Sepolia (verify address)
-      "UNI_TEST": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"  // Example UNI on Sepolia (verify address)
-    },
-    "polygon": {
-      "NATIVE": "MATIC",
-      "WMATIC": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-      "USDC": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-      "DAI": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
-    },
-    "polygon_mumbai": {
-      "NATIVE": "MATIC",
-      "WMATIC": "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
-      "USDC_TEST": "0x0FA8781a83E46826621b3BC094Ea2A0212e71B23" // Example USDC on Mumbai (verify)
-    }
+    "ethereum": { "NATIVE": "ETH", "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"},
+    "sepolia":  { "NATIVE": "ETH", "WETH": "0x7b79995e5f793A07Bc00c21412e50Ea00A78R7Sp" /*Verify*/, "LINK_TEST": "0x779877A7B0D9E8603169DdbD7836e478b4624789" },
+    "polygon":  { "NATIVE": "MATIC", "WMATIC": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270", "USDC": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359" },
+    "polygon_mumbai": { "NATIVE": "MATIC", "WMATIC": "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889", "USDC_TEST": "0x0FA8781a83E46826621b3BC094Ea2A0212e71B23" },
+    "bsc":      { "NATIVE": "BNB", "WBNB": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", "USDT": "0x55d398326f99059fF775485246999027B3197955" },
+    "solana":   { "NATIVE": "SOL", "WSOL": "So11111111111111111111111111111111111111112", "USDC": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" /*Mainnet USDC*/, "USDT": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB" /*Mainnet USDT*/ },
+    "solana_devnet": { "NATIVE": "SOL", "WSOL": "So11111111111111111111111111111111111111112", "USDC_DEV": "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr" /*Example Devnet USDC, verify*/ }
   },
 
-  "//": "--------------------------------------------------------------------------",
-  "//": " Token Analysis API Keys (Optional)                                     ",
-  "//": "--------------------------------------------------------------------------",
+  "//": "==========================================================================",
+  "//": " Chain Name to API-Specific ID / Name Mapping                           ",
+  "//": "==========================================================================",
+  "//": "Maps user-friendly chain names to specific identifiers used by external APIs.",
+  "//": "  'goplus': Chain ID for GoPlus Security API.",
+  "//": "  'dexscreener': Chain name for DexScreener API.",
+  "//": "  'type': 'evm' or 'solana' - used internally for dispatching logic.",
+  "//": "  'rpc_network_key' (for solana type): Key to use for `get_solana_rpc_url` (e.g., 'devnet', 'mainnet-beta').",
+  "chain_name_to_id_map": {
+    "ethereum":       {"goplus": "1",        "dexscreener": "ethereum",       "type": "evm"},
+    "bsc":            {"goplus": "56",       "dexscreener": "bsc",            "type": "evm"},
+    "polygon":        {"goplus": "137",      "dexscreener": "polygon",        "type": "evm"},
+    "arbitrum":       {"goplus": "42161",    "dexscreener": "arbitrum",       "type": "evm"},
+    "optimism":       {"goplus": "10",       "dexscreener": "optimism",       "type": "evm"},
+    "avalanche":      {"goplus": "43114",    "dexscreener": "avalanche",      "type": "evm"},
+    "base":           {"goplus": "8453",     "dexscreener": "base",           "type": "evm"},
+    "fantom":         {"goplus": "250",      "dexscreener": "fantom",         "type": "evm"},
+    "sepolia":        {"goplus": "11155111", "dexscreener": "ethereum",       "type": "evm"},
+    "polygon_mumbai": {"goplus": "80001",    "dexscreener": "polygon",        "type": "evm"},
+    "solana":         {"goplus": "solana",   "dexscreener": "solana",         "type": "solana", "rpc_network_key": "mainnet-beta"},
+    "solana_devnet":  {"goplus": "solana",   "dexscreener": "solana",         "type": "solana", "rpc_network_key": "devnet"}
+  },
+
+  "//": "==========================================================================",
+  "//": " Token Analysis API Keys (Optional but Recommended for GoPlus)          ",
+  "//": "==========================================================================",
   "token_analysis_apis": {
     "goplus_security": {
-      "comment": "API Key from GoPlus Security (https://gopluslabs.io/). Needed for token risk analysis. The 'api_key' is used for signing, 'api_secret' is not currently used by the GoPlus auth method in token_analyzer.py but included for completeness.",
+      "comment": "API Key from GoPlus Security (https://gopluslabs.io/). Required for detailed token risk analysis. Obtain from your GoPlus dashboard. Prioritizes GOPLUS_API_KEY env var.",
       "api_key": "YOUR_GOPLUS_API_KEY_HERE",
       "api_secret": "YOUR_GOPLUS_API_SECRET_HERE_IF_PROVIDED"
     },
     "dexscreener": {
-      "comment": "DexScreener API. Currently, their public API for pairs doesn't strictly require a key, but this is a placeholder if it changes or for accessing potential premium endpoints in the future.",
-      "api_key": "YOUR_DEXSCREENER_API_KEY_IF_ANY"
+      "comment": "DexScreener API. Public API for pairs currently doesn't strictly require a key. Placeholder for future.",
+      "api_key": "YOUR_DEXSCREENER_API_KEY_IF_ANY_OR_LEAVE_BLANK"
     }
-    // ": "To add other services like Birdeye, create a similar structure: \"birdeye\": {\"api_key\": \"YOUR_KEY\"}"
   },
 
-  "//": "--------------------------------------------------------------------------",
-  "//": " Agent Group Global Settings (Optional)                                 ",
-  "//": "--------------------------------------------------------------------------",
-  "//": "These settings control the behavior of the AI agent group simulation and services.",
-  "default_network": "sepolia",
-  "//": "The default EVM network for operations if not specified otherwise. Choose a TESTNET like 'sepolia' or 'polygon_mumbai' for safety during development and testing.",
-  "default_dex": "uniswap_v2",
-  "//": "The default DEX for trade proposals if not specified. Ensure this key exists in 'dex_routers' for the 'default_network'.",
+  "//": "==========================================================================",
+  "//": " Agent Group & Simulation Global Settings (Optional)                    ",
+  "//": "==========================================================================",
+  "default_evm_network": "sepolia",
+  "//": "Default EVM network for EVM operations if not specified. TESTNETS are STRONGLY recommended.",
+  "default_solana_network": "solana_devnet",
+  "//": "Default Solana network key (from chain_name_to_id_map) for Solana operations. Devnet is STRONGLY recommended.",
+  "default_evm_dex": "uniswap_v2",
+  "//": "Default EVM DEX for trade proposals. Ensure this key exists in 'dex_routers' for the 'default_evm_network'.",
 
   "discussion_rounds_per_day": 2,
-  "//": "Number of discussion rounds each AI agent participates in per simulated day.",
   "discussion_simulation_days": 1,
-  "//": "Number of simulated days the autonomous_discussion will run for.",
   "multisig_required_signatures": 2,
-  "//": "Number of agent approvals required for a transaction to be considered 'approved'. Adjust based on the number of agents.",
   "synopsis_max_interactions": 20,
-  "//": "Maximum number of recent agent interactions to include in the daily synopsis prompt sent to the LLM.",
 
   "websocket_host": "localhost",
-  "//": "Hostname for the WebSocket server that provides live updates to the HTML log page.",
   "websocket_port": 8765,
-  "//": "Port for the WebSocket server.",
-
   "http_host": "localhost",
-  "//": "Hostname for the HTTP server that serves the HTML discussion log.",
   "http_port": 8000,
-  "//": "Port for the HTTP server.",
 
   "external_api_endpoint": null,
-  "//": "Optional: URL for an external API to which agent interactions or summaries can be pushed (e.g., for advanced logging, analytics, or integration with other systems). Set to null or remove if not used.",
-  "api_timeout_seconds": 10,
-  "//": "Default timeout in seconds for external API calls like GoPlus, DexScreener, etc.",
-  "blockchain_read_delay_seconds": 10
-  "//": "Short delay (in seconds) to wait after an on-chain transaction before attempting to read potentially updated state (e.g., token balance after a trade). This can help account for minor node sync delays."
+  "api_timeout_seconds": 15,
+  "blockchain_read_delay_seconds": 12
 }
